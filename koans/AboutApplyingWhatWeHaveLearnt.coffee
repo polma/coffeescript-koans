@@ -17,14 +17,17 @@ describe 'About Applying What We Have Learnt', ->
           break
       return hasInvalidOperation
 
-    expect(findNeedle(operations)).toBe(FILL_ME_IN)
+    expect(findNeedle(operations)).toBe(true)
 
 
   it 'should find needle in a haystack (functional)', ->
     # FILL_ME_IN solution goes in here
+    #
+    filterOpts = (ops) -> (o for o in ops when o.direction == 'FWD' && o.distance > 100)
+    findNeedle = (ops) -> (filterOpts ops).length > 0
     # HINT: one way of doing this would be a 'for in when' construct using sum and
     # filter functions, the existential operator is also useful
-    (expect findNeedle(operations)).toBe(FILL_ME_IN)
+    (expect findNeedle(operations)).toBe(true)
 
 
   it 'should add all the natural numbers below 1000 that are multiples of 3 or 5 (imperative)', ->
@@ -32,14 +35,17 @@ describe 'About Applying What We Have Learnt', ->
     for i in [1..1000]
       if (i % 3 == 0 || i % 5 == 0)
         total += i
-    expect(total).toBe(FILL_ME_IN)
+    expect(total).toBe(234168)
 
 
   it 'should add all the natural numbers below 1000 that are multiples of 3 or 5 (functional)', ->
     # FILL_ME_IN solution goes in here
     # HINT: one way of doing this would be a 'for in when' construct using sum and
     # filter functions
-    (expect FILL_ME_IN).toBe(234168)
+    #
+    numbers = [1..1000]
+    total = (x for x in numbers when x%3 == 0 || x%5 == 0).reduce ((i,a) -> i + a)
+    (expect total).toBe(234168)
 
 
   it 'should find the sum of all the even valued terms in the fibonacci sequence which do not exceed four million (imperative)', ->
@@ -55,14 +61,22 @@ describe 'About Applying What We Have Learnt', ->
         sum += currentFib
       i+=1
 
-    expect(sum).toBe(FILL_ME_IN)
+    expect(sum).toBe(4613732)
 
 
   it 'should find the sum of all the even valued terms in the fibonacci sequence which do not exceed four million (functional)', ->
     # FILL_ME_IN solution goes in here
     # HINT: one way of doing this would be to construct an array of Fibonacci numbers
     # using a function and a while loop, and then to filter it using an even function
-    expect(FILL_ME_IN).toBe(4613732)
+    #
+    # generating the whole table and then iterating over it is not a good idea...
+    fib = [1,1]
+    i=1
+    while fib[i] < 4000000
+      fib[i+1] = fib[i] + fib[i-1]
+      ++i
+    sum = fib.filter((i) -> i%2 == 0).reduce ((i,b) -> i+b)
+    expect(sum).toBe(4613732)
 
 
 ###
